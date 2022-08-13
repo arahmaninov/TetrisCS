@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace TetrisCS
 {
@@ -9,39 +10,28 @@ namespace TetrisCS
             Console.SetWindowSize(35, 40);
             Console.SetBufferSize(35, 40);
 
-            Point p1 = new Point(2, 4, '@');
-            p1.Draw();
+            FigureGenerator generator = new FigureGenerator(17, 0, '#');
+            Figure s;
 
-            Point p2 = new Point(8, 14, '^');
-            p2.Draw();
-
-            Point[] points = new Point[3];
-            points[0] = new Point(16, 5, '#');
-            points[1] = new Point(18, 8, '#');
-            points[2] = new Point(20, 11, '#');
-            foreach (Point p in points)
-                p.Draw();
-
-            Square sq1 = new Square(8, 20, '#');
-            sq1.Draw();
-
-            Stick s1 = new Stick(12, 20, '#');
-            s1.Draw();
-
-            /*char[][] field = new char[3][];
-            field[0] = new char[3];
-            field[1] = new char[3];
-            field[2] = new char[3];
-            field[0][0] = 'X';
-            field[2][2] = 'O';
-            for(int i = 0; i < field.Length; i++)
+            while(true)
             {
-                for(int j = 0; j < field[i].Length; j++)
+                FigureFall(out s, generator);
+                s.Draw();
+            }    
+
+            static void FigureFall(out Figure s, FigureGenerator generator)
+            {
+                s = generator.GetNewFigure();
+                s.Draw();
+
+                for (int i = 0; i < 15; i++)
                 {
-                    Console.Write(field[i][j]);
+                    s.Hide();
+                    s.Move(Direction.DOWN);
+                    s.Draw();
+                    Thread.Sleep(200);
                 }
-                Console.WriteLine();
-            }*/
+            }
 
             Console.ReadLine();
         }

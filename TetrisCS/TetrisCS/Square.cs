@@ -4,10 +4,8 @@ using System.Text;
 
 namespace TetrisCS
 {
-    class Square
+    class Square : Figure
     {
-        Point[] points = new Point[4];
-        
         public Square(int x, int y, char symbol)
         {
             points[0] = new Point(x, y, symbol);
@@ -16,12 +14,9 @@ namespace TetrisCS
             points[3] = new Point(x + 1, y + 1, symbol);
         }
 
-        public void Draw()
+        public override void Rotate()
         {
-            foreach(Point p in points)
-            {
-                p.Draw();
-            }
+            
         }
     }
 }

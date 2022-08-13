@@ -4,26 +4,39 @@ using System.Text;
 
 namespace TetrisCS
 {
-    class Stick
+    class Stick : Figure
     {
-        Point[] points = new Point[4];
-
         public Stick(int x, int y, char symbol)
         {
             for(int i = 0; i < points.Length; i++)
             {
                 points[i] = new Point(x, y + i, '#');
             }
-            /*points[0] = new Point(x, y, '#');
-            points[0] = new Point(x, y, '#');
-            points[0] = new Point(x, y, '#');
-            points[0] = new Point(x, y, '#');*/
         }
 
-        public void Draw()
+        public override void Rotate()
         {
-            foreach (Point p in points)
-                p.Draw();
+            if (points[0].x == points[1].x)
+                RotateHorizontal();
+            else
+                RotateVertical();
+        }
+
+        private void RotateHorizontal()
+        {
+            for(int i = 0; i < points.Length; i++)
+            {
+                points[i].y = points[0].y;
+                points[i].x = points[0].x + i;
+            }
+        }
+        private void RotateVertical()
+        {
+            for (int i = 0; i < points.Length; i++)
+            {
+                points[i].x = points[0].x;
+                points[i].y = points[0].y + i;
+            }
         }
     }
 }

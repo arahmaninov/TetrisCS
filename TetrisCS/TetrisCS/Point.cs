@@ -6,9 +6,9 @@ namespace TetrisCS
 {
     class Point
     {
-        int x;
-        int y;
-        char c;
+        public int x;
+        public int y;
+        public char c;
 
         public Point(int a, int b, char symbol)
         {
@@ -21,6 +21,28 @@ namespace TetrisCS
         {
             Console.SetCursorPosition(x, y);
             Console.Write(c);
+        }
+
+        internal void Move(Direction dir)
+        {
+            switch(dir)
+            {
+                case Direction.DOWN:
+                    y += 1;
+                    break;
+                case Direction.LEFT:
+                    x -= 1;
+                    break;
+                case Direction.RIGHT:
+                    x += 1;
+                    break;
+            }
+        }
+
+        internal void Hide()
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(" ");
         }
     }
 }
