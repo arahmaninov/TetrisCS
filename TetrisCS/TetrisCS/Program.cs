@@ -11,29 +11,35 @@ namespace TetrisCS
             Console.SetBufferSize(35, 40);
 
             FigureGenerator generator = new FigureGenerator(17, 0, '#');
-            Figure s;
+            Figure currentFigure = generator.GetNewFigure();
 
             while(true)
             {
-                FigureFall(out s, generator);
-                s.Draw();
+                if(Console.KeyAvailable)
+                {
+                    var key = Console.ReadKey();
+                    HandleKey(currentFigure, key);
+                }
             }    
 
-            static void FigureFall(out Figure s, FigureGenerator generator)
-            {
-                s = generator.GetNewFigure();
-                s.Draw();
-
-                for (int i = 0; i < 15; i++)
-                {
-                    s.Hide();
-                    s.Move(Direction.DOWN);
-                    s.Draw();
-                    Thread.Sleep(200);
-                }
-            }
 
             Console.ReadLine();
+        }
+
+        private static void HandleKey(Figure currentFigure, ConsoleKeyInfo key)
+        {
+            switch(key.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                    currentFigure.Move(Direction.LEFT);
+                    break;
+                case ConsoleKey.RightArrow:
+                    currentFigure.Move(Direction.RIGHT);
+                    break;
+                case ConsoleKey.DownArrow:
+                    currentFigure.Move(Direction.DOWN);
+                    break;
+            }
         }
     }
 }
